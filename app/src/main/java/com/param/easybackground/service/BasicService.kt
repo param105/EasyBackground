@@ -11,6 +11,11 @@ class BasicService:Service(){
     var TAG = "BasicService"
 
 
+    override fun onCreate() {
+        super.onCreate()
+        Log.d(TAG, "Service Created")
+    }
+
     override fun onBind(intent: Intent?): IBinder? {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -21,11 +26,23 @@ class BasicService:Service(){
     }
 
     private fun startCount() {
-        thread { Runnable {
-            for (i in 1..20){
-                Log.d(TAG,"count is $i")
+
+        Thread(Runnable {
+            for (i in 1..10){
+                Log.d(TAG, "Service count is $i")
+                Thread.sleep(1000)
             }
-        } }
+            stopSelf()
+        }).start()
+
+
+
     }
 
-}
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "Service Destroyed")
+
+    }
+
+    }
